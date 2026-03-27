@@ -1,0 +1,19 @@
+services:
+  api:
+    build:
+      context: .
+      target: deps
+    working_dir: /app
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: development
+      HOST: 0.0.0.0
+      PORT: 5000
+      GOOGLE_APPLICATION_CREDENTIALS: /app/firebase-unifor-test-45253-firebase-adminsdk-fbsvc-d34f8b703a.json
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev
