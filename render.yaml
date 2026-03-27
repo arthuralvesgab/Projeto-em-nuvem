@@ -2,6 +2,32 @@ services:
   - type: web
     name: uniproject-backend
     runtime: docker
+    rootDir: backend
     plan: free
-    autoDeploy: true
+    autoDeployTrigger: commit
     healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: HOST
+        value: 0.0.0.0
+      - key: ROOT_ADMIN_EMAIL
+        sync: false
+      - key: FIREBASE_SERVICE_ACCOUNT_JSON
+        sync: false
+
+  - type: web
+    name: uniproject-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    autoDeployTrigger: commit
+    envVars:
+      - key: VITE_API_URL
+        sync: false
+
+
+//add render blueprint
